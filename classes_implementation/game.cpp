@@ -9,9 +9,9 @@
 
 Game::Game(){
     welcome();
-    offer_choose_player();
+    offer_choose_player(0);
+    offer_choose_player(1);
 
-    players[0] = new HumanPlayer('X');
     Board b = Board();
     process_game();
 }
@@ -21,20 +21,21 @@ void Game::welcome() {
                  " symbols and your turn will be first\n";
 }
 
-void Game::offer_choose_player() {
+void Game::offer_choose_player(int num_player) {
     int type_of_player = -1;
+    char symbol = num_player == 0 ? 'X': 'O';
 
     while (true){
-        std::cout << "Choose player you want to play against: 0 for human, 1 for level 1 AI, 2 for level 2 AI: ";
+        std::cout << "Choose player you want to play as player " << num_player + 1 << ": 0 for human, 1 for level 1 AI, 2 for level 2 AI: ";
         std::cin >> type_of_player;
         if (type_of_player >= 0 && type_of_player <= 2 ){
 
             if (type_of_player == 0){
-                players[1] = new HumanPlayer('O');
+                players[num_player] = new HumanPlayer(symbol);
             } else if (type_of_player == 1){
-                players[1] = new AI_level_one_player('O');
+                players[num_player] = new AI_level_one_player(symbol);
             } else if (type_of_player == 2){
-                players[1] = new AI_level_two_player('O');
+                players[num_player] = new AI_level_two_player(symbol);
             }
             break;
         }
@@ -44,10 +45,13 @@ void Game::offer_choose_player() {
 }
 
 void Game::process_game(){
+
+    b.represent();
     while ( true ){
-        b.represent();
+
         std::cout<<"Player 1 turns now\n";
         players[0]->take_turn(&b);
+        b.represent();
 
         if ( b.check_winner() == 'X' ){
             std::cout << "Player 1 won!\n";
@@ -57,16 +61,15 @@ void Game::process_game(){
             break;
         }
 
-        b.represent();
-
         std::cout<<"Player 2 turns now\n";
         players[1]->take_turn(&b);
+        b.represent();
 
         if ( b.check_winner() == 'O' ){
             std::cout << "Player 2 won!\n";
             break;
         } else if ( b.check_draw() ){
-            std::cout << "Draw has been done!\n";
+            std::cout << "The game ended in a draw!\n";
             break;
         }
     }

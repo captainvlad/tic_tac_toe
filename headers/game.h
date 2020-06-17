@@ -14,7 +14,7 @@ public:
     Player* players[2];
     Board b;
 
-    void offer_choose_player();
+    void offer_choose_player(int num_player);
     void welcome();
     void process_game();
 };
