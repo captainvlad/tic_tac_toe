@@ -52,7 +52,7 @@ int AI_level_two_player::get_free_place_r(int row, Board *b){
     return -1;
 }
 
-int AI_level_two_player::get_free_place_c(int col, class Board * b) {
+int AI_level_two_player::get_free_place_c(int col, Board * b) {
     for (int i = 0; i < b->get_height(); i++ ){
         if ( b->get_item(i, col) == '\0' ){
             return i;

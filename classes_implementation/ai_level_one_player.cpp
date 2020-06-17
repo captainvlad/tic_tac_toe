@@ -6,7 +6,7 @@
 #include <vector>
 #include <stdlib.h>
 
-void AI_level_one_player::take_turn(class Board * b) {
+void AI_level_one_player::take_turn( Board * b) {
     srand(time(NULL));
     std::vector<int> empty_x_coordinates;
     std::vector<int> empty_y_coordinates;
